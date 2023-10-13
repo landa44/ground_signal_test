@@ -1,5 +1,5 @@
 {
-  "name": "ground_signal_test",
+  "name": "blabla",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.7",
     "leaflet": "^1.9.4",
     "next": "13.5.4",
     "react": "^18",
