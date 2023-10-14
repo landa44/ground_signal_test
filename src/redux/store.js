@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import searchInputReducer from '@/features/searchBar/searchInputSlice';
+import locationsReducer from '@/features/searchBar/locationsSlice';
 
 export default configureStore({
   reducer: {
-    searchInput: searchInputReducer,
+    locations: locationsReducer,
   },
 });
