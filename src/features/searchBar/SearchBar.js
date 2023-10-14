@@ -22,9 +22,15 @@ const ItemList = ({item}) => {
 const ResultList = ({list}) => {
   return (
     <>
-      <div className='p-2 bg-blue-500 rounded-t'>
-        <p className='text-sm text-gray-50 ml-2'>Found {list.length} Results:</p>
-      </div>
+      {list.length===0?
+        <div className='p-2 bg-red-500 rounded'>
+        <p className='text-sm text-gray-50 ml-2'>Sorry, any data matched with this prefix</p>
+        </div>
+      :
+        <div className='p-2 bg-blue-500 rounded-t'>
+          <p className='text-sm text-gray-50 ml-2'>Found {list.length} Results:</p>
+        </div>
+      }
       <div classname='mb-2'>
         {list.map( (item)=> (<ItemList key={item.id} item={item}/>))}
       </div>
