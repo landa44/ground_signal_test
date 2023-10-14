@@ -16,6 +16,10 @@ export const locationsSlice = createSlice({
   },
   reducers: {
     filterLocations: (state, action) => {
+      if(action.payload === ''){
+        state.filteredList = [];
+        return;
+      }
       state.filteredList = state.list.filter( local => 
         local.name.toLowerCase().startsWith(action.payload.toLowerCase())
       );
