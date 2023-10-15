@@ -59,8 +59,8 @@ export default function SearchBar() {
   }, [locationsStatus, dispatch]);
 
   return (
-    <div className="fixed left-4 top-4 w-96">
-      <div className='flex p-2 bg-gray-50 rounded'>
+    <div className="fixed left-4 top-4 w-96 z-50">
+      <div className='flex p-2 bg-gray-50 rounded shadow-md'>
         <Image src={input===''? "icon-search-gray.svg": "icon-search.svg"} alt="Search Icon" width={14} height={14} className="ml-2 mr-3"/>
 
         <input
@@ -72,7 +72,7 @@ export default function SearchBar() {
         />
       </div>
 
-      <div className='mt-4 w-full rounded bg-gray-50' >
+      <div className='mt-4 w-full rounded bg-gray-50 shadow-md' >
         {input!='' && <ResultList list={locations}/>}
       </div>
     </div>
