@@ -13,17 +13,27 @@ export const locationsSlice = createSlice({
     list: [],
     status: 'idle',
     error: null,
+    selectedId: null,
   },
   reducers: {
     filterLocations: (state, action) => {
       if(action.payload === ''){
         state.filteredList = [];
-        return;
       }
-      state.filteredList = state.list.filter( local => 
-        local.name.toLowerCase().startsWith(action.payload.toLowerCase())
-      );
+      else{
+        state.filteredList = state.list.filter( local => 
+          local.name.toLowerCase().startsWith(action.payload.toLowerCase())
+        );
+      }
+
+      for(let item of state.filteredList)
+        if(item.id === state.selectedId)
+          return;
+      state.selectedId = null;
     },
+    setLocation: (state, action) => {
+      state.selectedId = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -41,8 +51,9 @@ export const locationsSlice = createSlice({
   }
 });
 
-export const { filterLocations } = locationsSlice.actions
+export const { filterLocations, setLocation } = locationsSlice.actions
 
+export const selectSelectedId = (state) => state.locations.selectedId;
 export const selectLocations = (state) => state.locations.list;
 export const selectFilteredLocations = (state) => state.locations.filteredList;
 

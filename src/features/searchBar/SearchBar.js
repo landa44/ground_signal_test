@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { filterLocations, selectFilteredLocations, fetchLocations } from './locationsSlice';
+import { filterLocations, selectFilteredLocations, fetchLocations, selectSelectedId, setLocation } from './locationsSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 const ItemList = ({item}) => {
+  const dispatch = useDispatch();
+  const selectedLocationId = useSelector(selectSelectedId);
+
   return (
-    <>
-      <div className="flex p-2">
-        <Image src="icon-pin.svg" alt="Pin Icon" width={17} height={17} className="ml-2 mr-3" />
+      <div className="flex p-2 hover:bg-blue-100" onClick={() => dispatch(setLocation(item.id))}>
+        <Image src={item.id === selectedLocationId? "icon-pin-gold.svg":"icon-pin.svg"} alt="Pin Icon" width={17} height={17} className="ml-2 mr-3" />
 
         <div >
             <p className='text-sm font-bold'>{item.name}</p>
@@ -15,7 +17,6 @@ const ItemList = ({item}) => {
 
         </div>
       </div>
-    </>
   );
 }
 
