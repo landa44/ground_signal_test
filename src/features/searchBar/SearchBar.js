@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { filterLocations, selectFilteredLocations, fetchLocations, selectSelectedId, setLocation } from './locationsSlice';
+import { filterLocations, selectFilteredLocations, fetchLocations, selectSelectedLocation, setLocation } from './locationsSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
-const ItemList = ({item}) => {
-  const dispatch = useDispatch();
-  const selectedLocationId = useSelector(selectSelectedId);
+export const ItemList = ({item, style="", specialIcon=false, handlerClick=()=>{}}) => {
 
   return (
-      <div className="flex p-2 hover:bg-blue-100" onClick={() => dispatch(setLocation(item.id))}>
-        <Image src={item.id === selectedLocationId? "icon-pin-gold.svg":"icon-pin.svg"} alt="Pin Icon" width={17} height={17} className="ml-2 mr-3" />
+      <div className={"flex p-2 " + style} onClick={handlerClick}>
+        <Image src={specialIcon? "icon-pin-gold.svg":"icon-pin.svg"} 
+          alt="Pin Icon" width={17} height={17} className="ml-2 mr-3" />
 
         <div >
             <p className='text-sm font-bold'>{item.name}</p>
@@ -21,6 +20,10 @@ const ItemList = ({item}) => {
 }
 
 const ResultList = ({list}) => {
+  const dispatch = useDispatch();
+  const selectedLocation = useSelector(selectSelectedLocation);
+
+
   return (
     <>
       {list.length===0?
@@ -33,7 +36,15 @@ const ResultList = ({list}) => {
         </div>
       }
       <div classname='mb-2'>
-        {list.map( (item)=> (<ItemList key={item.id} item={item}/>))}
+        {list.map( item => (
+          <ItemList 
+            key={item.id} 
+            item={item} 
+            style="hover:bg-blue-100"
+            specialIcon={selectedLocation != null && item.id === selectedLocation.id} 
+            handlerClick={() => dispatch(setLocation(item))}
+          />)
+        )}
       </div>
     </>
   );
@@ -60,7 +71,7 @@ export default function SearchBar() {
   }, [locationsStatus, dispatch]);
 
   return (
-    <div className="fixed left-4 top-4 w-96 z-50">
+    <div className="fixed left-4 top-4 w-96 text-black">
       <div className='flex p-2 bg-gray-50 rounded shadow-md'>
         <Image src={input===''? "icon-search-gray.svg": "icon-search.svg"} alt="Search Icon" width={14} height={14} className="ml-2 mr-3"/>
 

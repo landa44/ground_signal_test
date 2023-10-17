@@ -13,7 +13,7 @@ export const locationsSlice = createSlice({
     list: [],
     status: 'idle',
     error: null,
-    selectedId: null,
+    selectedLocation: null,
   },
   reducers: {
     filterLocations: (state, action) => {
@@ -27,12 +27,12 @@ export const locationsSlice = createSlice({
       }
 
       for(let item of state.filteredList)
-        if(item.id === state.selectedId)
+        if(state.selectedLocation != null && item.id === state.selectedLocation.id)
           return;
-      state.selectedId = null;
+      state.selectedLocation = null;
     },
     setLocation: (state, action) => {
-      state.selectedId = action.payload;
+      state.selectedLocation = action.payload;
     }
   },
   extraReducers(builder) {
@@ -53,7 +53,7 @@ export const locationsSlice = createSlice({
 
 export const { filterLocations, setLocation } = locationsSlice.actions
 
-export const selectSelectedId = (state) => state.locations.selectedId;
+export const selectSelectedLocation= (state) => state.locations.selectedLocation;
 export const selectLocations = (state) => state.locations.list;
 export const selectFilteredLocations = (state) => state.locations.filteredList;
 
