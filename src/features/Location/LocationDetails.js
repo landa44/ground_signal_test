@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import LocationOverview from "../../components/BaseLocationOverview";
-import BaseButton from "@/components/BaseButton";
-import CloseButton from "@/components/CloseButton";
+import BaseLocationOverview from "./BaseLocationOverview";
+import BaseButton from "./BaseButton";
+import CloseButton from "./CloseButton";
 
 
 export default function LocationDetail({location, handleClose}){
@@ -13,7 +13,7 @@ export default function LocationDetail({location, handleClose}){
 
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 bg-gray-50 rounded text-black">
               <div className="flex justify-between">
-                <LocationOverview item={location}/>
+                <BaseLocationOverview item={location}/>
 
                 {location.details !== undefined && location.details.website !== undefined &&
                   <Link 
