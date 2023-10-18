@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { filterLocations, selectFilteredLocations, fetchLocations, selectSelectedLocation, setLocation } from '../Location/locationsSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import BaseLocationOverview from '@/components/BaseLocationOverview';
+import BaseLocationOverview from '@/features/Location/BaseLocationOverview';
 
 
 const ResultList = ({list, selectedItem, handlerClick}) => {  
