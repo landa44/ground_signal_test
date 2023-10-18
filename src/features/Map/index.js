@@ -1,7 +1,4 @@
-import dynamic from 'next/dynamic';
+import CustomMap from "./CustomMap";
 
-const Map = dynamic(() => import('./Map'), {
-    ssr: false
-});
 
-export default Map
+export default CustomMap;
