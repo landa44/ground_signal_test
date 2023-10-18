@@ -34,12 +34,11 @@ export default function LocationDetail({location, handleClose}){
               </p>
 
               {location.images !== undefined && 
-                <div className="flex flex-wrap px-1 justify-between overflow-auto max-h-64">
+                <div className="flex flex-wrap px-1 mb-2 overflow-auto max-h-64">
                   {location.images.map( (imagePath, idx) =>
-                    <img key={idx} className="p-1 w-1/3" src={imagePath}/>
+                    <img key={idx} className="p-1 w-1/2 sm:w-1/3" src={imagePath} alt={`Picture #${idx+1} of ${location.name}`}/>
                   )}
                 </div>
-
               }
             </div>
           </div>
