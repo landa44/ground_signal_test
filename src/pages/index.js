@@ -5,15 +5,16 @@ import Map from '@/features/Map';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredLocations, selectSelectedLocation, setLocation, fetchLocations } from '@/features/Location/locationsSlice';
 import LocationDetail from '@/features/Location/LocationDetails';
+import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-  
   const dispatch = useDispatch();
   const selectedLocation = useSelector(selectSelectedLocation);
   const locations = useSelector(selectFilteredLocations);
   const locationsStatus = useSelector(state => state.locations.status);
+  const [showDetail, setShowDetail] = useState(false);
 
   useEffect(() => {
     if (locationsStatus === 'idle') {
@@ -21,7 +22,6 @@ export default function Home() {
     }
   }, [locationsStatus, dispatch]);
 
-  const [showDetail, setShowDetail] = useState(false);
   
   const handlerMarkerClick = location => {
     dispatch(setLocation(location));
@@ -69,8 +69,7 @@ export default function Home() {
         </Map>
       </div>
 
-      <SearchBar/>
-      
+      <SearchBar/>  
       {showDetail && <LocationDetail location={selectedLocation} handleClose={() => setShowDetail(false)}/>}
     </>
   );
