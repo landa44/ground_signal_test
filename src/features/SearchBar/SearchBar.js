@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { filterLocations, selectFilteredLocations, fetchLocations, selectSelectedLocation, setLocation } from '../Location/locationsSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import BaseLocationOverview from '@/features/Location/BaseLocationOverview';
+import useDebounce from '@/hooks/debounce';
 
 
 const ResultList = ({list, selectedItem, handlerClick}) => {  
@@ -34,15 +35,22 @@ const ResultList = ({list, selectedItem, handlerClick}) => {
 
 export default function SearchBar({className}) {
   const [input, setInput] = useState('');
+  const [isSearchCompleted, setIsSearchCompleted] = useState(false);
   
   const dispatch = useDispatch();
   const selectedLocation = useSelector(selectSelectedLocation);
   const locations = useSelector(selectFilteredLocations);
+
+  const debouncedRequest = useDebounce(() => {
+    dispatch(filterLocations(input));
+    setIsSearchCompleted(true);
+  });
   
   const handleInputChange = e => {
-    const newValue = e.target.value;
-    setInput(newValue);
-    dispatch(filterLocations(newValue));
+    setInput(e.target.value);
+    setIsSearchCompleted(false);
+
+    debouncedRequest();
   };
 
   return (
@@ -59,9 +67,14 @@ export default function SearchBar({className}) {
         />
       </div>
 
-      <div className='mt-4 w-full rounded bg-gray-50 shadow-md' >
-        {input!='' && <ResultList list={locations} selectedItem={selectedLocation} handlerClick={(item) => dispatch(setLocation(item))}/>}
-      </div>
+      {isSearchCompleted &&
+      
+        <div className='mt-4 w-full rounded bg-gray-50 shadow-md' >
+          {input!='' && <ResultList list={locations} selectedItem={selectedLocation} handlerClick={(item) => dispatch(setLocation(item))}/>}
+        </div>
+      
+      }
+
     </div>
   );
 }
