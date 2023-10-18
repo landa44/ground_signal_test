@@ -32,7 +32,7 @@ const ResultList = ({list, selectedItem, handlerClick}) => {
   );
 }
 
-export default function SearchBar() {
+export default function SearchBar({className}) {
   const [input, setInput] = useState('');
   
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className='fixed left-0 top-0 px-4 pt-4 w-full text-black sm:w-96'>
+    <div className={className}>
       <div className='flex p-2 bg-gray-50 rounded shadow-md'>
         <Image src={input===''? 'icon-search-gray.svg': 'icon-search.svg'} alt='Search Icon' width={14} height={14} className='ml-2 mr-3'/>
 

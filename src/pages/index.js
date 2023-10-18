@@ -69,7 +69,7 @@ export default function Home() {
         </Map>
       </div>
 
-      <SearchBar/>  
+      <SearchBar className='fixed left-0 top-0 px-4 pt-4 w-full text-black sm:w-96'/>  
       {showDetail && <LocationDetail location={selectedLocation} handleClose={() => setShowDetail(false)}/>}
     </>
   );
