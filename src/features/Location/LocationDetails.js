@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import BaseLocationOverview from "./BaseLocationOverview";
-import BaseButton from "./BaseButton";
-import CloseButton from "./CloseButton";
+import BaseLocationOverview from "../../components/BaseLocationOverview";
+import BaseButton from "@/components/BaseButton";
+import CloseButton from "@/components/CloseButton";
 
 
 export default function LocationDetail({location, handleClose}){

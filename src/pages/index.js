@@ -1,13 +1,15 @@
 import {React, useState, useEffect} from 'react';
-import { Inter } from 'next/font/google';
+import Image from 'next/image'
+import { Inter } from 'next/font/google'
 import SearchBar from '@/features/SearchBar/SearchBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredLocations, selectSelectedLocation, setLocation, fetchLocations } from '@/features/Location/locationsSlice';
 import LocationDetail from '@/features/Location/LocationDetails';
 import CustomMap from '@/features/Map/CustomMap';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] })
 const DEFAULT_CENTER = [42.354022, -71.046245];
+
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -41,5 +43,5 @@ export default function Home() {
 
       {showDetail && <LocationDetail location={selectedLocation} handleClose={() => setShowDetail(false)}/>}
     </>
-  );
+  )
 }

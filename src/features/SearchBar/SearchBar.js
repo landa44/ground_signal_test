@@ -2,29 +2,29 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { filterLocations, selectFilteredLocations, fetchLocations, selectSelectedLocation, setLocation } from '../Location/locationsSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import BaseLocationOverview from '@/features/Location/BaseLocationOverview';
+import BaseLocationOverview from '@/components/BaseLocationOverview';
 import useDebounce from '@/hooks/debounce';
 
 
-const ResultList = ({list, selectedItem, handlerClick}) => {  
+const ResultList = ({ list, selectedItem, handlerClick }) => {
   return (
     <>
-      {list.length===0?
+      {list.length === 0 ?
         <div className='p-2 bg-red-500 rounded'>
-        <p className='text-sm text-gray-50 ml-2'>Sorry, any data matched with this prefix</p>
+          <p className='text-sm text-gray-50 ml-2'>Sorry, any data matched with this prefix</p>
         </div>
-      :
+        :
         <div className='p-2 bg-blue-500 rounded-t'>
           <p className='text-sm text-gray-50 ml-2'>Found {list.length} Results:</p>
         </div>
       }
       <div className='mb-2'>
-        {list.map( item => (
-          <BaseLocationOverview 
-            key={item.id} 
-            item={item} 
+        {list.map(item => (
+          <BaseLocationOverview
+            key={item.id}
+            item={item}
             style='hover:bg-blue-100'
-            specialIcon={selectedItem !== null && item.id === selectedItem.id} 
+            specialIcon={selectedItem !== null && item.id === selectedItem.id}
             handlerClick={() => handlerClick(item)}
           />)
         )}
@@ -33,10 +33,10 @@ const ResultList = ({list, selectedItem, handlerClick}) => {
   );
 }
 
-export default function SearchBar({className}) {
+export default function SearchBar({ className }) {
   const [input, setInput] = useState('');
   const [isSearchCompleted, setIsSearchCompleted] = useState(false);
-  
+
   const dispatch = useDispatch();
   const selectedLocation = useSelector(selectSelectedLocation);
   const locations = useSelector(selectFilteredLocations);
@@ -45,7 +45,7 @@ export default function SearchBar({className}) {
     dispatch(filterLocations(input));
     setIsSearchCompleted(true);
   });
-  
+
   const handleInputChange = e => {
     setInput(e.target.value);
     setIsSearchCompleted(false);
@@ -56,7 +56,7 @@ export default function SearchBar({className}) {
   return (
     <div className={className}>
       <div className='flex p-2 bg-gray-50 rounded shadow-md'>
-        <Image src={input===''? 'icon-search-gray.svg': 'icon-search.svg'} alt='Search Icon' width={14} height={14} className='ml-2 mr-3'/>
+        <Image src={input === '' ? 'icon-search-gray.svg' : 'icon-search.svg'} alt='Search Icon' width={14} height={14} className='ml-2 mr-3' />
 
         <input
           type='text'
@@ -68,11 +68,11 @@ export default function SearchBar({className}) {
       </div>
 
       {isSearchCompleted &&
-      
+
         <div className='mt-4 w-full rounded bg-gray-50 shadow-md' >
-          {input!='' && <ResultList list={locations} selectedItem={selectedLocation} handlerClick={(item) => dispatch(setLocation(item))}/>}
+          {input != '' && <ResultList list={locations} selectedItem={selectedLocation} handlerClick={(item) => dispatch(setLocation(item))} />}
         </div>
-      
+
       }
 
     </div>
