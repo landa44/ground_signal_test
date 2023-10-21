@@ -31,6 +31,16 @@ export default function Home() {
     setShowDetail(true);
   }
 
+  const avgStoreTrafficData = {
+    monday: 12,
+    tuesday: 37,
+    wednesday: 117,
+    thursday: 197,
+    friday: 105,
+    saturday: 98,
+    sunday: 45,
+  };
+
   return (
     <>
       {locationsStatus === 'failed' && window.alert("Sorry. We are having some issues.")}
