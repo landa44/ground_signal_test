@@ -12,11 +12,12 @@ const DEFAULT_CENTER = [42.354022, -71.046245];
 
 
 export default function Home() {
+  const [showDetail, setShowDetail] = useState(false);
+
   const dispatch = useDispatch();
   const selectedLocation = useSelector(selectSelectedLocation);
   const locations = useSelector(selectFilteredLocations);
   const locationsStatus = useSelector(state => state.locations.status);
-  const [showDetail, setShowDetail] = useState(false);
 
   useEffect(() => {
     if (locationsStatus === 'idle') {
@@ -32,6 +33,7 @@ export default function Home() {
 
   return (
     <>
+      {locationsStatus === 'failed' && window.alert("Sorry. We are having some issues.")}
       <CustomMap 
         className='w-full h-screen relative -z-0' 
         center={DEFAULT_CENTER} 
