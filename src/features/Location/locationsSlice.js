@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { client } from '@/pages/api/client';
+import { locationsService } from '@/services/location.service';
 
 export const fetchLocations = createAsyncThunk('locations/fetchLocations', async () => {
-  const response = await client.get('http://localhost:3000/api/fakeData');
-  return response.data.locations;
+  const response = await locationsService.getLocations();
+  return response.locations;
 });
 
 export const locationsSlice = createSlice({
@@ -56,6 +56,7 @@ export const { filterLocations, setLocation } = locationsSlice.actions
 export const selectSelectedLocation= (state) => state.locations.selectedLocation;
 export const selectLocations = (state) => state.locations.list;
 export const selectFilteredLocations = (state) => state.locations.filteredList;
+export const selectError = (state) => state.locations.error;
 
 
 export default locationsSlice.reducer;
