@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from 'next/dynamic';
 
 
@@ -6,9 +6,9 @@ const Map = dynamic(() => import('./Map'), {
     ssr: false
 });
 
-export default function CustomMap({className, center, locations, selectedLocation, handlerMarkerClick}) {
+export default function CustomMap({className, defaultCenter, locations, selectedLocation, handlerMarkerClick}) {
   return (
-    <Map className={className} center={center}>
+    <Map className={className} defaultCenter={defaultCenter}>
       { (TileLayer, Marker, SelectedLocationMarker, Leaflet) =>
         <>
           <TileLayer

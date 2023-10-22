@@ -36,7 +36,7 @@ export default function Home() {
       {locationsStatus === 'failed' && window.alert("Sorry. We are having some issues.")}
       <CustomMap 
         className='w-full h-screen relative -z-0' 
-        center={DEFAULT_CENTER} 
+        defaultCenter={DEFAULT_CENTER} 
         locations={locations} selectedLocation={selectedLocation} 
         handlerMarkerClick={handlerMarkerClick}
       />
