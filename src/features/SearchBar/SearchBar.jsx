@@ -3,7 +3,7 @@ import Image from "next/image";
 import {
   filterLocations,
   selectFilteredLocations,
-  selectSelectedLocation,
+  selectChosenLocation,
   setLocation,
 } from "../Location/locationsSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -46,7 +46,7 @@ export default function SearchBar({ className }) {
   const [isSearchCompleted, setIsSearchCompleted] = useState(false);
 
   const dispatch = useDispatch();
-  const selectedLocation = useSelector(selectSelectedLocation);
+  const chosenLocation = useSelector(selectChosenLocation);
   const locations = useSelector(selectFilteredLocations);
 
   const debouncedRequest = useDebounce(() => {
@@ -86,7 +86,7 @@ export default function SearchBar({ className }) {
           {input != "" && (
             <ResultList
               filteredLocations={locations}
-              selectedItem={selectedLocation}
+              selectedItem={chosenLocation}
               handlerClick={(item) => dispatch(setLocation(item))}
             />
           )}

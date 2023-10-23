@@ -1,44 +1,70 @@
-import React from "react";
+import { React, useState } from "react";
 import dynamic from "next/dynamic";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectFilteredLocations,
+  selectChosenLocation,
+  setLocation,
+} from "@/features/Location/locationsSlice";
+import LocationDetail from "@/features/Location";
 
 const Map = dynamic(() => import("./Map"), {
-  ssr: false
+  ssr: false,
 });
 
-export default function CustomMap({ className, defaultCenter, locations, selectedLocation, handlerMarkerClick }) {
+export default function CustomMap({ className, defaultCenter }) {
+  const [showDetail, setShowDetail] = useState(false);
+
+  const dispatch = useDispatch();
+  const chosenLocation = useSelector(selectChosenLocation);
+  const locations = useSelector(selectFilteredLocations);
+
+  const handlerMarkerClick = (location) => {
+    dispatch(setLocation(location));
+    setShowDetail(true);
+  };
+
   return (
-    <Map className={className} defaultCenter={defaultCenter}>
-      {(TileLayer, Marker, SelectedLocationMarker, Leaflet) =>
-        <>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-          />
-          {
-            locations.map(item => selectedLocation === null || selectedLocation.id != item.id ?
-              <Marker
-                key={item.id}
-                position={[item.location.lat, item.location.lon]}
-                icon={Leaflet.icon(
-                  {
+    <>
+      <Map className={className} defaultCenter={defaultCenter}>
+        {(TileLayer, Marker, SelectedLocationMarker, Leaflet) => (
+          <>
+            <TileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            />
+            {locations.map((item) =>
+              chosenLocation === null || chosenLocation.id != item.id ? (
+                <Marker
+                  key={item.id}
+                  position={[item.location.lat, item.location.lon]}
+                  icon={Leaflet.icon({
                     iconUrl: "leaflet/images/marker-icon.png",
                     iconRetinaUrl: "leaflet/images/marker-icon-2x.png",
                     iconSize: [25, 41],
-                  }
-                )}
-                eventHandlers={{
-                  click: () => handlerMarkerClick(item),
-                }}
-              /> :
-              <SelectedLocationMarker
-                key={item.id}
-                position={[item.location.lat, item.location.lon]}
-                handlerMarkerClick={() => handlerMarkerClick(item)}
-              />
-            )
-          }
-        </>
-      }
-    </Map>
+                  })}
+                  eventHandlers={{
+                    click: () => handlerMarkerClick(item),
+                  }}
+                />
+              ) : (
+                <SelectedLocationMarker
+                  key={item.id}
+                  position={[item.location.lat, item.location.lon]}
+                  handlerMarkerClick={() => handlerMarkerClick(item)}
+                />
+              )
+            )}
+          </>
+        )}
+      </Map>
+
+      {showDetail && (
+        <LocationDetail
+          location={chosenLocation}
+          handleClose={() => setShowDetail(false)}
+        />
+      )}
+    </>
   );
 }

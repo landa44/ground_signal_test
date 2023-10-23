@@ -5,7 +5,7 @@ import Leaflet from "leaflet";
 
 const MAP_ZOOM = 13;
 
-function SelectedLocationMarker({ position, key, handlerMarkerClick }) {
+function SelectedLocationMarker({ key, position, handlerMarkerClick }) {
   const map = useMap();
   map.flyTo(position, MAP_ZOOM);
 

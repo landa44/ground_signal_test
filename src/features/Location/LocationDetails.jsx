@@ -8,7 +8,7 @@ import BarChart from "../BarChart/BarChart";
 export default function LocationDetail({ location, handleClose }) {
   return (
     <>
-      <div className="h-screen w-full top-0 left-0 fixed bg-gray-800 bg-opacity-70 z-50">
+      <div className="h-full w-full top-0 left-0 fixed bg-gray-800 bg-opacity-70 z-50">
         <CloseButton handleClick={handleClose} />
 
         <div className="fixed top-1/2 left-1/2 w-full p-2 transform -translate-x-1/2 -translate-y-1/2 sm:w-96 bg-gray-50 rounded text-black">
