@@ -6,8 +6,8 @@ import Leaflet from "leaflet";
 const MAP_ZOOM = 13;
 
 function SelectedLocationMarker({ key, position, handlerMarkerClick }) {
-  const map = useMap();
-  map.flyTo(position, MAP_ZOOM);
+  //setting the map view to the region of the position
+  useMap().flyTo(position, MAP_ZOOM);
 
   return (
     <Marker
@@ -28,6 +28,7 @@ function SelectedLocationMarker({ key, position, handlerMarkerClick }) {
 export default function Map({ children, className, defaultCenter }) {
   const [center, setCenter] = useState(null);
 
+  //setting center to the current position of the user, if request rejected or error use default center
   navigator.geolocation.getCurrentPosition(
     (location) => {
       setCenter([location.coords.latitude, location.coords.longitude]);
@@ -47,6 +48,7 @@ export default function Map({ children, className, defaultCenter }) {
           scrollWheelZoom={true}
           zoomControl={false}
         >
+          {/* Adding dynamic updates to the map, taking advantage of ssr in the rest of the app */}
           {children(TileLayer, Marker, SelectedLocationMarker, Leaflet)}
         </MapContainer>
       )}

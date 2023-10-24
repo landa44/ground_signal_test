@@ -26,6 +26,7 @@ export const locationsSlice = createSlice({
   },
   reducers: {
     filterLocations: (state, action) => {
+      // when the input is empty, go back to initial state of filteredLocations
       if (action.payload === "") {
         state.filteredLocations = [];
       } else {
@@ -34,6 +35,7 @@ export const locationsSlice = createSlice({
         );
       }
 
+      // if the chosenLocation is not contained in the result filteredLocations we clean the state
       if (
         state.chosenLocation != null &&
         state.filteredLocations.every(

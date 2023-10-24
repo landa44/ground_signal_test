@@ -8,16 +8,19 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
+const CHART_TITLE = "Average Store Traffic";
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
 
 export default function BarChart({ data }) {
   const chartData = {
     labels: Object.keys(data).map(
-      (label) => label.charAt(0).toUpperCase() + label.slice(1)
+      (key) =>
+        // Capitalizing the keys
+        key.charAt(0).toUpperCase() + key.slice(1)
     ),
     datasets: [
       {
-        label: "Average Store Traffic",
         data: Object.values(data),
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
@@ -31,7 +34,7 @@ export default function BarChart({ data }) {
     plugins: {
       title: {
         display: true,
-        text: "Avg Store Traffic",
+        text: CHART_TITLE,
       },
     },
   };
