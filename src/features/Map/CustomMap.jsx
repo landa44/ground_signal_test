@@ -8,6 +8,7 @@ import {
 } from "@/features/Location/locationsSlice";
 import LocationDetail from "@/features/Location";
 
+//since Leaflet use client side rendering, import it disabling ssr
 const Map = dynamic(() => import("./Map"), {
   ssr: false,
 });
@@ -33,6 +34,8 @@ export default function CustomMap({ className, defaultCenter }) {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             />
+
+            {/* Displaying the filtered list */}
             {locations.map((item) =>
               chosenLocation === null || chosenLocation.id != item.id ? (
                 <Marker

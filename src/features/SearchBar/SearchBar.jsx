@@ -13,6 +13,7 @@ import useDebounce from "@/hooks/debounce";
 const ResultList = ({ filteredLocations, selectedItem, handlerClick }) => {
   return (
     <>
+      {/* in case we don't have result to show a red banner shows up */}
       {filteredLocations.length === 0 ? (
         <div className="p-2 bg-red-500 rounded">
           <p className="text-sm text-gray-50 ml-2">
@@ -26,17 +27,18 @@ const ResultList = ({ filteredLocations, selectedItem, handlerClick }) => {
           </p>
         </div>
       )}
-      <div className="mb-2">
+      <ul className="mb-2">
         {filteredLocations.map((item) => (
-          <BaseLocationOverview
-            key={item.id}
-            item={item}
-            style="hover:bg-blue-100"
-            specialIcon={selectedItem !== null && item.id === selectedItem.id}
-            handlerClick={() => handlerClick(item)}
-          />
+          <li key={item.id}>
+            <BaseLocationOverview
+              item={item}
+              style="hover:bg-blue-100"
+              specialIcon={selectedItem !== null && item.id === selectedItem.id}
+              handlerClick={() => handlerClick(item)}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 };
@@ -49,13 +51,16 @@ export default function SearchBar({ className }) {
   const chosenLocation = useSelector(selectChosenLocation);
   const locations = useSelector(selectFilteredLocations);
 
+  //updating the debounce with the new input typed
   const debouncedRequest = useDebounce(() => {
     dispatch(filterLocations(input));
+    //setting the search as completed to render the list of results
     setIsSearchCompleted(true);
   });
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
+    //initializing the search process and hiding results until filter is done
     setIsSearchCompleted(false);
 
     debouncedRequest();
